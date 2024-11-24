@@ -1,5 +1,15 @@
 # Backend Tech Challenge
 
+As per point - Explain any compromise you may have made
+Compromises made:
+Not getting a mongo instance and do the trip saving deleting there.
+Not separating the routes and moving them in a trip folder.
+Didn't make documentation with postman.
+Didn't add a Dockerfile to have it in a container.
+Also if i had time to go above and beyond, i would have made a user auth endpoint to then have users, and do the trip saving, displaying and deletion by user.
+This is all the time i had for this, i hope it's sufficient.
+Thank you!!
+
 ## Trip planner
 
 This api defines a `Trip` in this way:
