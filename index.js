@@ -8,6 +8,7 @@ const {
   tripSchema,
   tripsQuerySchema,
   tripDeleteSchema,
+  tripGetSchema,
 } = require('./schemas/tripSchemas.js');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -53,16 +54,32 @@ let trips = [];
 app.post('/trip', validator.body(tripSchema), (req, res) => {
   const trip = req.body;
   try {
-    trips.push(trip);
-    res.send('Trip saved successfully!');
+    if (!trips.find((elem) => elem.id === trip.id)) {
+      trips.push(trip);
+      res.send('Trip saved successfully!');
+    }
+    res.send('Trip already saved!');
   } catch (error) {
     res.send(error.message);
   }
 });
 
-app.get('/trip', (req, res) => {
+app.get('/trip', validator.query(tripGetSchema), (req, res) => {
+  const { sort_by } = req.query;
+  let response = [];
   try {
-    res.send(trips);
+    switch (sort_by) {
+      case 'fastest':
+        response = trips.sort((a, b) => a.duration - b.duration);
+        break;
+      case 'cheapest':
+        response = trips.sort((a, b) => a.cost - b.cost);
+        break;
+      default:
+        response = trips;
+        break;
+    }
+    res.send(response);
   } catch (error) {
     res.send(error.message);
   }

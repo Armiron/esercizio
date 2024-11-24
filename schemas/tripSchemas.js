@@ -29,8 +29,13 @@ const tripDeleteSchema = Joi.object({
   id: Joi.string().required(),
 });
 
+const tripGetSchema = Joi.object({
+  sort_by: Joi.string().valid(...supportedSorting),
+});
+
 module.exports = {
   tripSchema,
   tripsQuerySchema,
   tripDeleteSchema,
+  tripGetSchema,
 };
