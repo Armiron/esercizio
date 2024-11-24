@@ -1,5 +1,11 @@
 # Backend Tech Challenge
 
+For - Include a README with relevant information (how to install, build, test and run the software)
+create a .env file with the API_KEY which you should already have.
+Do npm install
+Then run the api with node index.js or with npm run main
+To run tests with coverage npm run test
+
 As per point - Explain any compromise you may have made
 Compromises made:
 Not getting a mongo instance and do the trip saving deleting there.
