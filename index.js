@@ -67,34 +67,30 @@ app.post('/trip', validator.body(tripSchema), (req, res) => {
 app.get('/trip', validator.query(tripGetSchema), (req, res) => {
   const { sort_by } = req.query;
   let response = [];
-  try {
-    switch (sort_by) {
-      case 'fastest':
-        response = trips.sort((a, b) => a.duration - b.duration);
-        break;
-      case 'cheapest':
-        response = trips.sort((a, b) => a.cost - b.cost);
-        break;
-      default:
-        response = trips;
-        break;
-    }
-    res.send(response);
-  } catch (error) {
-    res.send(error.message);
+  switch (sort_by) {
+    case 'fastest':
+      response = trips.sort((a, b) => a.duration - b.duration);
+      break;
+    case 'cheapest':
+      response = trips.sort((a, b) => a.cost - b.cost);
+      break;
+    default:
+      response = trips;
+      break;
   }
+  res.send(response);
 });
 
 app.delete('/trip/:id', validator.params(tripDeleteSchema), (req, res) => {
   const { id } = req.params;
-  try {
-    trips = trips.filter((trip) => trip.id != id);
-    res.send('Trip deleted successfully!');
-  } catch (error) {
-    res.send(error.message);
-  }
+  trips = trips.filter((trip) => trip.id != id);
+  res.send('Trip deleted successfully!');
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`);
+  });
+}
+
+module.exports = app;
