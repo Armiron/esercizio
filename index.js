@@ -85,8 +85,8 @@ app.get('/trip', validator.query(tripGetSchema), (req, res) => {
   }
 });
 
-app.delete('/trip', validator.query(tripDeleteSchema), (req, res) => {
-  const { id } = req.query;
+app.delete('/trip/:id', validator.params(tripDeleteSchema), (req, res) => {
+  const { id } = req.params;
   try {
     trips = trips.filter((trip) => trip.id != id);
     res.send('Trip deleted successfully!');
